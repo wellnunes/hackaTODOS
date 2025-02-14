@@ -20,14 +20,15 @@ def insights(request) -> Response:
         f"Based on the provided data, generate insights about the clinic's performance. "
         f"The timeframe to analyze is {timeframe}. Here is the data snapshot: {database}. "
         f"Provide key metrics on patient registrations, conversion rates, and lead quality."
+        f" (Objective answer and in Portuguese)"
     )
 
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": prompt}],
-            temperature=0.7,
-            max_tokens=100
+            temperature=1,
+            max_tokens=1000
         )
 
         return Response({"insights": response["choices"][0]["message"]["content"]}, status=HTTPStatus.OK)
